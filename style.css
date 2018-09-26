@@ -1,0 +1,60 @@
+body {
+  font-family: "Open Sans", serif;
+  margin:20px;
+}
+
+form {
+  display: inline-block;
+  float: right;
+}
+#network {
+  position:relative;
+  width: 100%;
+  float:left;
+  /*display: none;*/
+}
+.desc {
+  /*max-width: 1200px;*/
+  font-size:120%;
+}
+.desc input {
+  font-size: 100%;
+}
+
+#network svg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: visible;
+}
+
+#network svg text {
+  pointer-events: none;
+}
+input#search, label {
+  font-size: 130%;
+}
+
+#tooltip {
+  font-size: 14pt;
+  font-family: "Open Sans", serif;
+  text-anchor: middle;
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+
+}
+#nn {
+  float: left;
+  width: 50%;
+  overflow-x: scroll;
+}
+#chartingArea {
+  width: 100%;
+}
+#Loading {
+
+  position:absolute;
+  top:50%;
+  left:40%;
+  font-size: 150%;
+}

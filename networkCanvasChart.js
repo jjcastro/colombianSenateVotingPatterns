@@ -10,12 +10,12 @@ var networkCanvasChart = function () {
   chart.useFixedAxis = false;
   chart.drawLinks = true;
   chart.onlyDrawSelectedLinks = false;
-  chart.xAttr = "followers_count";
+  // chart.xAttr = "followers_count";
   chart.rAttr = function () { return 1; };
   chart.xTitle = "Followers overall";
-  chart.yAttr = "count_followers_in_query";
+  // chart.yAttr = "count_followers_in_query";
   chart.yTitle = "Followers in OpenVisConf";
-  chart.width = 600;
+  chart.width = 900;
   chart.height = 520;
   chart.showClusters = false;
   chart.useForceInABox = false;
@@ -46,8 +46,14 @@ var networkCanvasChart = function () {
 
 
   // Colors for clusters
-  var color = d3.scaleOrdinal(d3.schemeCategory20);
-  // Should we show images
+  // var color = d3.scaleOrdinal(d3.schemeCategory20);
+  var color = function(party) {
+    const map = {
+      "Centro Democrático": "#FF0000"
+    }
+    return map[party];
+  }
+  // Should we show images 
 
   // Should we show clusters?
 
@@ -297,6 +303,9 @@ var networkCanvasChart = function () {
     var bounds = [[xScale(min[chart.xAttr]), yScale(min[chart.yAttr])],
                   [xScale(max[chart.xAttr]), yScale(max[chart.yAttr])]
     ];
+
+    console.log(bounds);
+
     var dx = bounds[1][0] - bounds[0][0],
       dy = bounds[1][1] - bounds[0][1],
       x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -520,12 +529,12 @@ var networkCanvasChart = function () {
       simulation.alpha(1).restart();
 
       // d3.select(canvas)
-          // .call(d3.drag()
-          //     .container(canvas)
-          //     .subject(dragsubject)
-          //     .on("start", dragstarted)
-          //     .on("drag", dragged)
-          //     .on("end", dragended))
+      //     .call(d3.drag()
+      //         .container(canvas)
+      //         .subject(dragsubject)
+      //         .on("start", dragstarted)
+      //         .on("drag", dragged)
+      //         .on("end", dragended))
 
       function ticked() {
         context.clearRect(0, 0, width, height);
@@ -631,7 +640,7 @@ var networkCanvasChart = function () {
       // function dragsubject() {
       //   return simulation.find(d3.event.x, d3.event.y);
       // }
-      // // });
+      // // // });
 
       // function dragstarted() {
       //   if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -707,8 +716,6 @@ var networkCanvasChart = function () {
         // console.log((d3.mouse(this)[1]-margin.top) + " - " + (d3.mouse(canvas)[1]-margin.top) );
 
       }
-
-
 
       function mouseleave() {
         console.log("mouseleave");
