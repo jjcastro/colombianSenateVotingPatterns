@@ -32,11 +32,14 @@
   <div id="network" height="900"></div>
 </div>
 
+<div id="affinity"></div>
+
 <script src="networkCanvasChart.js"></script>
 <script src="forceInABoxv4.js"></script>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="js/papaparse.min.js"></script>
 <script src="countVotes.js"></script>
+<script src="affinityGraph.js"></script>
 <script>
 /* global d3, networkCanvasChart, navio */
 
@@ -148,9 +151,20 @@ var func = function (results) {
 
   var graph = periodoMap["2006-2010"];
 
-
   function periodoFilter(periodo) {
     update(periodoMap[periodo], true);
+  }
+
+  plot.onClick = function(node) {
+    var periodo = d3.select('input[name="periodo"]:checked').property("value");
+    console.log(node);
+    var links = periodoMap[periodo].links;
+
+    var data = links.filter(function(link) {
+      return link.source.name === node.name;
+    });
+
+    affinityGraph(data, color);
   }
 
   function filter(graph) {
@@ -282,5 +296,7 @@ Papa.parse("VotacionesSenado2017_de_CongresoVisible_small.csv", {
     ga("send", "pageview");
 
   </script>
+
+
 </body>
 </html>

@@ -40,6 +40,7 @@ var networkCanvasChart = function () {
   chart.linkSelectedStrokeStyle = "rgba(255,200,200,1.0)";
   chart.legendFont = "12px Sans Serif";
   chart.drawLegend = false;
+  chart.onClick = function(node) { console.log(node); }
 
   var width,height;
   var margin = {top:10, left:0, bottom:60, right:10};
@@ -395,6 +396,16 @@ var networkCanvasChart = function () {
 
       svg = svgEle.merge(svgEnter)
         // .style("pointer-events", "none")
+        .on("click", function() {
+          if (!d3.event.active) simulation.alphaTarget(0);
+
+          var c = d3.select(this.parentElement).select("canvas").node();
+          var node = simulation.find(d3.mouse(c)[0],
+            d3.mouse(c)[1] - margin.top
+          );
+
+          chart.onClick(node);
+        })
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
           .call(zoom)
@@ -677,8 +688,6 @@ var networkCanvasChart = function () {
             .text(chart.yTitle + "  " + node[chart.yAttr]);
 
         }
-
-        console.log(node);
 
         selectedNode = node;
         selectedLinks = simulation.force("link").links().filter(function (d) {

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style type="text/css">
+
+* {
+  box-sizing: border-box;
+}
+  
+  body {
+    font-family: 'Helvetica';
+    margin: 0;
+  }
+
+  #graph {
+    width: 50vw;
+    float: right;
+    padding: 20px;
+  }
+
+  #filters {
+    width: 50vw;
+    height: 100vh;
+    float: left;
+    position: fixed;
+  }
+
+  #center {
+   position: relative;
+   top: 50%;
+   transform: translateY(-50%);
+   padding: 0px 50px 80px;
+  }
+
+  p {
+    line-height: 1.5em;
+  }
+
+  button {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+</style>
+</head>
+<body>
+<svg height="5" width="5" xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <pattern id="lightstripe" patternUnits="userSpaceOnUse" width="5" height="5"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc1JyBoZWlnaHQ9JzUnPgogIDxyZWN0IHdpZHRoPSc1JyBoZWlnaHQ9JzUnIGZpbGw9J3doaXRlJy8+CiAgPHBhdGggZD0nTTAgNUw1IDBaTTYgNEw0IDZaTS0xIDFMMSAtMVonIHN0cm9rZT0nIzg4OCcgc3Ryb2tlLXdpZHRoPScxJy8+Cjwvc3ZnPg==" x="0" y="0" width="5" height="5"> </image> </pattern> </defs> </svg>
+
+<div id="filters">
+  <div id="center">
+    <h2>Afinidad Partidaria por Iniciativas Gubernamentales en el Congreso Colombiano</h2>
+
+    <p>La gráfica muestra los votos por SI, NO, o SIN REGISTRO para Proposiciones, Actos Legislativos, Leyes Estatutarias y Proyectos de Ley de iniciativa gubernamental para los períodos 2006-2010, 2010-2014 y 2014-2018.</p>
+
+    <button onclick="filter.votesNo()">Ordenar por votos NO</button>
+    <button onclick="filter.votesYes()">Ordenar por votos SI</button>
+    <button onclick="filter.participation()">Ordenar por participación</button>
+  </div>
+</div>
+<div id="graph"></div>
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>

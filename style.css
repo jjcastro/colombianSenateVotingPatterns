@@ -58,3 +58,18 @@ input#search, label {
   left:40%;
   font-size: 150%;
 }
+
+#affinity {
+  display: none;
+  width: 75%;
+  background-color: white;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  position: fixed;
+  left: 50%;
+  margin-left: -37.5%;
+  box-sizing: border-box;
+  border-radius: 15px;
+  height: 80vh;
+  overflow-y: auto;
+  top: 10vh;
+}

@@ -65,6 +65,8 @@ d3.csv(filename, function(data) {
     }
   });
 
+  console.log(list);
+
   /// ==========================
 
   // set the dimensions and margins of the graph
@@ -148,7 +150,6 @@ d3.csv(filename, function(data) {
       .enter()
       .append("text")
       .text( function (d) {
-        console.log(d);
         return d.nos;
       })
       .attr("text-anchor", "end")
