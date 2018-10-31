@@ -23,7 +23,7 @@ d3.json(filename, function(data) {
   // set the dimensions and margins of the graph
   var margin = {top: 50, right: 20, bottom: 0, left: 100},
       width = 700 - margin.left - margin.right,
-      height = 30000 - margin.top - margin.bottom;
+      height = 3000 - margin.top - margin.bottom;
 
   function render(list) {
     var svg = d3.select("#graph").selectAll('*').remove();

@@ -23,7 +23,7 @@ d3.json(filename, function(data) {
   // set the dimensions and margins of the graph
   var margin = {top: 50, right: 20, bottom: 0, left: 100},
       width = 700 - margin.left - margin.right,
-      height = 30000 - margin.top - margin.bottom;
+      height = 40000 - margin.top - margin.bottom;
 
   function render(list) {
     var svg = d3.select("#graph").selectAll('*').remove();
@@ -32,7 +32,7 @@ d3.json(filename, function(data) {
         // .attr("width", width + margin.left + margin.right)
         // .attr("height", height + margin.top + margin.bottom)
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 700 3000")
+        .attr("viewBox", "0 0 700 40000")
       .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");

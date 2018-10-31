@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style type="text/css">
+
+* {
+  box-sizing: border-box;
+}
+  
+  body {
+    font-family: 'Helvetica';
+    margin: 0;
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+  }
+
+  #right {
+    position: fixed;
+    right: 10px;
+    top: 20px;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="graph"></div>
+
+<div id="right">
+  <button onclick="functions.periods()">Mostrar períodos presidenciales</button>
+  <button onclick="functions.inflection()">Mostrar puntos de inflexión</button>
+  <button onclick="functions.peace()">Mostrar implementación paz</button>
+</div>
+
+<script type="text/javascript">
+
+  
+  var pixelHeight = 10000;
+
+
+</script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="../viz-lines-script.js"></script>
+
+</body>
+</html>
