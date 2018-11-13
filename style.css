@@ -1,0 +1,192 @@
+/* GRAPHIC CODE */
+
+*, * > * {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.8em;
+}
+
+h1,h2,h3 {
+  line-height: 1.5em;
+  font-family: 'Archivo', sans-serif;
+}
+
+main.intro {
+  height: 100vh;
+  padding: 100px;
+  position: relative;
+}
+
+main.intro h1 {
+  font-size: 2.4em;
+}
+
+main.intro div.intro-text {
+  width: 60vw;
+}
+
+main.intro .logo-holder {
+  position: absolute;
+  right: 100px;
+  bottom: 100px;
+}
+
+main.intro .logo-holder img {
+  height: 80px;
+  padding: 10px 20px;
+}
+
+main.text {
+  max-width: 70vw;
+  margin: 50px auto;
+}
+
+.graphic,
+.graphic2 {
+  width: 100%;
+  position: relative;
+  line-height: 1.8em;
+}
+
+.graphic__prose,
+.graphic2__prose {
+  width: 40vw;
+}
+
+.graphic__prose .trigger,
+.graphic2__prose .trigger2 {
+  padding: 20px;
+  margin: 0;
+  min-height: 240px;
+  height: 50vh;
+  padding-left: 100px;
+}
+
+.graphic .footer {
+  position: fixed;
+  bottom: 30px;
+  right: 50px;
+  font-weight: 600;
+  opacity: 0.3;
+}
+
+.graphic__prose .trigger .info,
+.graphic2__prose .trigger2 .info {
+  padding: 20px;
+}
+
+.graph-scroll-active.trigger .info,
+.graph-scroll-active.trigger2 .info {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+
+.graphic__vis,
+.graphic2__vis {
+  position: absolute;
+  top: 0;
+  margin-left: 40vw;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  height: 100vh;
+  width: 60vw;
+  padding-right: 20px;
+}
+
+.graphic__vis.is-fixed,
+.graphic2__vis.is-fixed {
+  position: fixed;
+}
+
+.graphic__vis.is-bottom,
+.graphic2__vis.is-bottom {
+  top: auto;
+  bottom: 0;
+}
+
+.graphic__vis svg,
+.graphic2__vis svg {
+  /*border: 1px dashed black;*/
+  top: 50%;
+  position: relative;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+/*.item circle {
+  stroke: #666;
+  stroke-width: 1px;
+  fill: #fff;
+}
+
+.item text {
+  fill: #666;
+  font-size: 12px;
+  text-anchor: middle;
+  alignment-baseline: middle;
+}*/
+
+.partyLabel line {
+  stroke: rgb(255,0,0);
+  stroke-width:2
+}
+
+/* TOOLTIP */
+
+div.tooltip {
+  position: absolute;           
+  text-align: left;
+  padding: 5px 10px;             
+  font: 12px sans-serif;        
+  background: white;   
+  border: 2px solid black;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+
+div.tooltip h3,
+div.tooltip h4,
+div.tooltip p {
+  margin: 0;
+}
+
+div.tooltip p {
+  margin-bottom: 3px;
+}
+
+div.tooltip h4.party {
+  background-color: #000;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 3px;
+  display: inline-block;
+
+  text-shadow: 0px 0px 3px rgba(0,0,0,0.75);
+}
+
+/* graph-scroll.js version */
+.graphic__vis.graph-scroll-fixed,
+.graphic2__vis.graph-scroll-fixed {
+  position: fixed;
+  right: auto;
+}
+
+.graphic__vis.graph-scroll-below,
+.graphic2__vis.graph-scroll-below {
+  top: auto;
+  bottom: 0;
+}
+
+/* GRAPHIC 2 */
+
+.linedata {
+  fill: none;
+  stroke-width: 3px;
+}
