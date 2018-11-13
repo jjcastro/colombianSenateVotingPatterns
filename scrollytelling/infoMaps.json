@@ -1,0 +1,76 @@
+{
+  "partyColors": {
+    "Centro Democrático": "#3E92F7",
+    "Partido de la U - Partido Social de Unidad Nacional": "#F3A73B",
+    "Liberal Colombiano": "#EC483F",
+    "Conservador Colombiano": "#143FC8",
+    "Cambio Radical": "#ED6164",
+    "Alianza Verde": "#377D22",
+    "Partido Verde": "#377D22",
+    "PDA - Polo Democrático Alternativo": "#FEF558",
+    "MIRA": "#002BF5",
+    "PIN - Partido de Integración Nacional": "#FFFC54",
+    "Opción Ciudadana": "#FFFC54"
+  },
+  "partyLabelsInfo": {
+    "Centro Democrático": {
+      "lines": ["Centro","Democrático"],
+      "width": 70
+    },
+    "Partido de la U - Partido Social de Unidad Nacional": {
+      "lines": ["Partido", "de la U"],
+      "width": 70
+    },
+    "Liberal Colombiano": {
+      "lines": ["Liberal","Colombiano"],
+      "width": 70
+    },
+    "Conservador Colombiano": {
+      "lines": ["Conservador","Colombiano"],
+      "width": 70
+    },
+    "Cambio Radical": {
+      "lines": ["Cambio","Radical"],
+      "width": 70
+    },
+    "Otros": {
+      "lines": ["", "Otros"],
+      "width": 260
+    }
+  },
+  "relevantPeople": {
+    "Álvaro Uribe Vélez": "Presidente de Colombia, 2004-2010",
+    "Ivan  Duque Márquez": "Presidente de Colombia, 2018-2022",
+    "Nancy Patricia Gutierrez Castañeda": "Presidente del Senado, 2007-2008",
+    "Hernán Francisco Andrade Serrano": "Presidente del Senado, 2008-2009",
+    "Javier Enrique Caceres Leal": "Presidente del Senado, 2009-2010",
+    "Armando Alberto Benedetti Villaneda": "Presidente del Senado, 2010-2011",
+    "Juan Manuel Corzo Román": "Presidente del Senado, 2011-2012",
+    "Roy Leonardo Barreras Montealegre": "Presidente del Senado, 2012-2013",
+    "Juan Fernando Cristo Bustos": "Presidente del Senado, 2013-2014",
+    "José David Name Cardozo": "Presidente del Senado, 2014-2015",
+    "Luis Fernando Velasco Cháves": "Presidente del Senado, 2015-2016",
+    "Oscar Mauricio  Lizcano Arango": "Presidente del Senado, 2016-2017",
+    "Efraín José Cepeda Sarabia": "Presidente del Senado, 2017-2018"
+  },
+  "partyNames": {
+    "Partido de la U - Partido Social de Unidad Nacional": "Partido de la U",
+    "PDA - Polo Democrático Alternativo": "Polo Democrático Alternativo",
+    "Liberal Colombiano": "Partido Liberal",
+    "Conservador Colombiano": "Partido Conservador",
+    "Partido Verde ": "Partido Verde"
+  },
+  "partyXPos": {
+    "Centro Democrático": 0.12,
+    "Partido de la U - Partido Social de Unidad Nacional": 0.24,
+    "Liberal Colombiano": 0.355,
+    "Conservador Colombiano": 0.47,
+    "Cambio Radical": 0.58,
+    "PDA - Polo Democrático Alternativo": 0.68,
+    "Partido Verde": 0.75,
+    "Alianza Verde": 0.75,
+    "Opción Ciudadana": 0.82,
+    "PIN - Partido de Integración Nacional": 0.82,
+    "Otros": 0.79
+  }
+}

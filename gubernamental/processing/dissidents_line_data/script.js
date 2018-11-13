@@ -118,26 +118,85 @@ var cleanup = (result) => {
   return result;
 }
 
-var exportToJsonFile = (jsonData) => {
-  let dataStr = JSON.stringify(jsonData);
-  let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-  
-  let exportFileDefaultName = 'line_chart_data.json';
-  
-  let linkElement = document.createElement('a');
-  linkElement.setAttribute('href', dataUri);
-  linkElement.setAttribute('download', exportFileDefaultName);
-  linkElement.click();
-}
 
-Papa.parse(fileName, {
-  download: true,
-  header: true,
-  step: step,
-  complete: () => {
-    exportToJsonFile(cleanup(result));
-    console.log(cleanup(result));
-  }
-});
+d3.json("party_data.json", function(error1, partyData) {
+  d3.json("person_data.json", function(error2, personData) {
+    d3.json("which_party_which_period.json", function(error3, map) {
+
+      const mappings = {
+        'Partido Verde': 'Alianza Verde',
+        'Convergencia Ciudadana': 'Opción Ciudadana',
+        'PIN - Partido de Integración Nacional': 'Opción Ciudadana'
+      }
+      
+      var partidos = ["PDA - Polo Democrático Alternativo",
+        "Convergencia Ciudadana",
+        "Cambio Radical",
+        "Conservador Colombiano",
+        "Liberal Colombiano",
+        "Opción Ciudadana",
+        "Centro Democrático",
+        "PIN - Partido de Integración Nacional",
+        "Partido de la U - Partido Social de Unidad Nacional"
+      ];
+
+      var disidentes = {};
+
+      ["2006-2010", "2010-2014", "2014-2018"].forEach((period) => {
+        var selection = map[period];
+
+        Object.keys(partyData).forEach((party) => {
+          disidentes[party] = {};
+          Object.keys(selection).forEach((name) => {
+             // console.log(name);
+            var memberOf = mappings[selection[name]] ? mappings[selection[name]] : selection[name];
+            // console.log(memberOf);
+            if (memberOf == party) {
+              var sumOfDifference = 0;
+              Object.keys(partyData[party]).forEach((date) => {
+                if (personData[name][date]) {
+                  // Caluclate pcts
+                  var pctParty = (partyData[party][date].si) / (partyData[party][date].si + partyData[party][date].no);
+                  var pctPerson = (personData[name][date].si) / (personData[name][date].si + personData[name][date].no);
+                  sumOfDifference += Math.abs(pctParty - pctPerson);
+                }
+              });
+              disidentes[party][name] = sumOfDifference;
+            }
+          });
+        });
+      })
+      
+      var masDisidentes = {}
+      Object.keys(disidentes).forEach((party) => {
+        var max = 0;
+        var mostDissident = null;
+        Object.keys(disidentes[party]).forEach((name) => {
+          if (disidentes[party][name] > max) {
+            max = disidentes[party][name];
+            mostDissident = name;
+          }
+        });
+        masDisidentes[party] = {
+          name: mostDissident,
+          with: max
+        }
+      });
+
+      console.log(masDisidentes);
+
+    })
+  })
+})
+
+// Papa.parse(fileName, {
+//   download: true,
+//   header: true,
+//   step: step,
+//   complete: () => {
+//     exportToJsonFile(cleanup(result));
+//     console.log(cleanup(result));
+//   }
+// });
 
 
