@@ -13,7 +13,7 @@ window.createGraphic = function(data, maps) {
 
 	var margin = 20
 	// 500x500 chart
-	var height = 600 + margin*2
+	var height = 650 + margin*2
 	var width = 900 + margin*2
 
 	var yCenter = {
@@ -38,6 +38,7 @@ window.createGraphic = function(data, maps) {
 			resetAxis();
 			resetPeriodLabels();
 			resetPartyLabels();
+			resetMarks();
 			
 			simulation
 			  .force('x', d3.forceX().x(function(d) {
@@ -57,6 +58,7 @@ window.createGraphic = function(data, maps) {
 		() => {
 			resetAxis();
 			resetPartyLabels();
+			resetMarks();
 
 			svg.select('.periodLabel').selectAll('text')
 				.transition()
@@ -81,13 +83,14 @@ window.createGraphic = function(data, maps) {
 
 		() => {
 			resetAxis();
+			resetMarks();
 
 			svg.select('.periodLabel').selectAll('text')
 				.transition()
 				.duration(500)
 				.attr('opacity', 1)
 				.attr('y', function(d) {
-					return yCenter[d] * height + 90;
+					return yCenter[d] * height + 75;
 				})
 				.attr('x', width/2);
 
@@ -96,71 +99,68 @@ window.createGraphic = function(data, maps) {
 				.duration(500)
 				.attr('opacity', 1);
 
-			simulation
-			  .force('x', d3.forceX().x(function(d) {
-				  var location = maps.partyXPos[d.data.partido];
-				  return xPositionScale(location ? location : 0.9);
-				}))
-				.force('y', d3.forceY().y(function(d) {
-				  return yCenter[d.data.period] * height;
-				}))
-			  .force('collision', d3.forceCollide().radius(function(d) {
-			    return d.radius + 2;
-			  }));
+			usePerPartyForces();
 
 			simulation.alpha(1).restart();
 		},
 
 		() => {
-			resetPartyLabels();
+			resetAxis();
+			resetMarks();
 
-			svg.select(".axes")
-				.transition()
-				.duration(500)
-				.attr("opacity", "1")
-
-			d3.selectAll(".bandrect")
-				.transition()           // apply a transition
-    		.duration(750)
-    		.delay(function(d,i){return 100*i})
-    			.attr("transform", "translate(0 0)");
-
-    	svg.select('.periodLabel').selectAll('text')
+			svg.select('.periodLabel').selectAll('text')
 				.transition()
 				.duration(500)
 				.attr('opacity', 1)
 				.attr('y', function(d) {
-					return yCenter[d] * height + 70;
+					return yCenter[d] * height + 75;
 				})
 				.attr('x', width/2);
 
-			simulation
-				.force('x', d3.forceX().x(function(d) {
-				  return xScale(d.data.si / d.data.total);
-				}))
-				.force('y', d3.forceY().y(function(d) {
-				  return yCenter[d.data.period] * height;
-				}))
-			  .force('collision', d3.forceCollide().radius(function(d) {
-			    return d.radius + 2;
-			  }));
+			svg.select('.partyLabel')
+				.transition()
+				.duration(500)
+				.attr('opacity', 1);
+
+			showMark("CD1");
+
+			usePerPartyForces();
 
 			simulation.alpha(1).restart();
 		},
 
 		() => {
 			resetPartyLabels();
+			resetMarks();
 
-			simulation
-				.force('x', d3.forceX().x(function(d) {
-				  return xScale(d.data.si / d.data.total);
-				}))
-				.force('y', d3.forceY().y(function(d) {
-				  return yCenter[d.data.period] * height;
-				}))
-			  .force('collision', d3.forceCollide().radius(function(d) {
-			    return d.radius + 2;
-			  }));
+			showAxis();
+
+			useSupportForces();
+
+			simulation.alpha(1).restart();
+		},
+
+		() => {
+			resetPartyLabels();
+			resetMarks();
+
+			showAxis();
+
+			showMark("CD2");
+			showMark("TODOS1");
+
+			useSupportForces();
+
+			simulation.alpha(1).restart();
+		},
+
+		() => {
+			resetPartyLabels();
+			resetMarks();
+
+			showAxis();
+
+			useSupportForces();
 
 			simulation.alpha(1).restart();
 		},
@@ -183,13 +183,14 @@ window.createGraphic = function(data, maps) {
 	  return "#666666";
 	}
 
-	function setupCharts() {
+	function setupCharts(param) {
+		graphicVisEl.select('svg').remove();
 
 		svg = graphicVisEl.append('svg')
 			// .attr('width', width + 'px')
 			// .attr('height', height + 'px')
 			.attr("preserveAspectRatio", "xMinYMin meet")
-   		.attr("viewBox", "0 0 " + width +  " " + height)
+   		.attr("viewBox", "0 0 " + (width+30) +  " " + height)
 
 		// Tooltip
 		tooltip = d3.select("body")
@@ -214,6 +215,8 @@ window.createGraphic = function(data, maps) {
 
 		var ticks = xScale.ticks();
 		var tickDistance = xScale(ticks[1]) - xScale(ticks[0]);
+
+		var yOffset = 50;
 	  
 	  var axes = svg.append("g").attr("class", "axes");
     ticks.forEach((value, i) => {
@@ -222,9 +225,9 @@ window.createGraphic = function(data, maps) {
     				.attr("class", 'bandrect')
     				.attr("fill", "#f2f2f2")
 						.attr("x", xScale(value))
-						.attr("y", 0)
+						.attr("y", yOffset)
 						.attr("width", tickDistance)
-						.attr("height", height);
+						.attr("height", 0);
     		}
     });
 
@@ -232,7 +235,9 @@ window.createGraphic = function(data, maps) {
                    .scale(xScale)
                    .tickFormat(d3.format(".0%"));
     axes.append("g")
+    		.style("font", "14px Archivo")
     	 .attr("class", "axes")
+    	 .attr("transform", "translate(0 " + yOffset + ")")
        .call(x_axis);
 
     // ============================================
@@ -301,6 +306,109 @@ window.createGraphic = function(data, maps) {
 			.attr("x1", lineEnd).attr("y1", dHeight - 3)
 			.attr("x2", lineEnd).attr("y2", dHeight + 3);
 
+		// ============================================
+    // SET UP STORYTELLING MARKS
+
+		drawMark("CD1", maps.partyXPos["Centro Democrático"], yCenter["2014-2018"], 100, 100);
+		drawMark("CD2", 0.38, 0.83, 170, 100);
+		drawMark("TODOS1", 0.7, 0.53, 230, 130);
+
+		// ============================================
+    // SET UP ARROW HEADS AND GRADIENT DEFINITIONS
+
+		// Green marker
+		var markers = {
+			green: {color: "#377D22"},
+			red: {color: "#EC483F"}
+		};
+
+		Object.keys(markers).forEach((key) => {
+			svg.append("defs")
+			  .append("marker")
+			  .attr("id", "arrow-"+key)
+			  .attr("markerWidth", 12)
+			  .attr("markerHeight", 12)
+			  .attr("viewBox", "0 0 12 12")
+			  .attr("refX", 6)
+			  .attr("refY", 6)
+			  .attr("orient", "auto")
+			  .append("path")
+			  .attr("d", "M2,2 L10,6 L2,10 L6,6 L2,2")
+				.attr("fill", markers[key].color);			
+		})
+
+		// Set up lines gradient
+		var gradient = svg.select("defs")
+				.append("linearGradient")
+				.attr("id", "gradient-green")
+				.attr("spreadMethod", "pad")
+				.attr("x1", "0%")
+				.attr("y1", "0%")
+				.attr("x2", "100%")
+				.attr("y2", "0%");
+
+		gradient.append("stop")
+			.attr("offset","0%")
+			.attr("stop-color","#FFFFFF")
+			.attr("stop-opacity","0")
+		gradient.append("stop")
+			.attr("offset","50%")
+			.attr("stop-color","#FFFFFF")
+			.attr("stop-opacity","1")
+		gradient.append("stop")
+			.attr("offset","100%")
+			.attr("stop-color","#FFFFFF")
+			.attr("stop-opacity","0");
+
+		// ============================================
+    // SET UP AXIS ARROWS AND GRADIENT
+
+		const lineHeight = 30;
+
+		svg.append("line")
+			.attr("class", "axesRight")
+      .attr("x1",width/2 + 30)  
+      .attr("y1",lineHeight)  
+      .attr("x2",width-35)  
+      .attr("y2",lineHeight)  
+      .attr("stroke", markers.green.color)  
+      .attr("stroke-width", 3)
+      .attr("marker-end","url(#arrow-green)");  
+
+    svg.append("line")
+    	.attr("class", "axesLeft")
+      .attr("x1",width/2 - 30)  
+      .attr("y1",lineHeight)  
+      .attr("x2",30)  
+      .attr("y2",lineHeight)  
+      .attr("stroke", markers.red.color)  
+      .attr("stroke-width",3)  
+      .attr("marker-end","url(#arrow-red)");  
+
+    svg.append("rect")
+    	.attr("class", "axes")
+      .attr("x",30)  
+      .attr("y",10)  
+      .attr("width",width-60)  
+      .attr("height",30)  
+      .attr("fill", "url(#gradient-green)")  
+      .attr("marker-end","url(#arrow-red)"); 
+
+    svg.append("text")
+    	// .attr("text-anchor" "")
+    	.text("Menos apoyo a iniciativas del gobierno")
+    	.attr("fill", markers.red.color)  
+			.attr("class", "axesLeft")
+    	.attr("x", 50)
+    	.attr("y", 15);
+
+    svg.append("text")
+    	.attr("text-anchor", "end")
+    	.text("Más apoyo a iniciativas del gobierno")
+    	.attr("fill", markers.green.color) 
+    	.attr("class", "axesRight")
+    	.attr("x", width-60)
+    	.attr("y", 15);
 
 		// ============================================
     // RESET add ons TO STARTING STATE
@@ -308,6 +416,7 @@ window.createGraphic = function(data, maps) {
     resetAxis();
     resetPeriodLabels();
     resetPartyLabels();
+    resetMarks();
 
     // ============================================
 
@@ -315,7 +424,7 @@ window.createGraphic = function(data, maps) {
 			.classed('chart', true)
 			.attr('transform', 'translate(' + margin + ',' + margin + ')');
 
-		var nodesSenado = data["Senado"];
+		var nodesSenado = data[param];
 
 		nodes = nodesSenado.map(function(d) {
 		  return {
@@ -377,15 +486,65 @@ window.createGraphic = function(data, maps) {
 	}
 
 	function resetAxis() {
-		svg.select(".axes")
+		svg.selectAll(".axes")
+			.transition()
+			.duration(200)
+    	.attr("opacity", 0);
+
+    svg.selectAll(".axesRight")
 			.transition()
 			.duration(200)
     	.attr("opacity", 0)
+    	.attr("transform", "translate(-100 0)");
+
+    svg.selectAll(".axesLeft")
+			.transition()
+			.duration(200)
+    	.attr("opacity", 0)
+    	.attr("transform", "translate(100 0)");
 
     svg.selectAll(".bandrect")
 			.transition()
 			.duration(200)
-    	.attr("transform", "translate(0 -" + height + ")");
+    	.attr("height", 0);
+	}
+
+	function showAxis() {
+		svg.selectAll(".axes")
+			.transition()
+			.duration(500)
+			.attr("opacity", "1");
+
+		svg.selectAll(".axesLeft")
+			.transition()
+			// .ease(d3.easeBounce)
+			.duration(500)
+			.delay(100)
+    	.attr("opacity", 1)
+    	.attr("transform", "translate(0 0)");
+
+		svg.selectAll(".axesRight")
+			.transition()
+			// .ease(d3.easeBounce)
+			.duration(500)
+			.delay(400)
+    	.attr("opacity", 1)
+    	.attr("transform", "translate(0 0)");
+
+    d3.selectAll(".bandrect")
+			.transition()           // apply a transition
+  		.duration(750)
+  		.delay(function(d,i){return 100*i})
+  			.attr("height", height);
+
+  	svg.select('.periodLabel').selectAll('text')
+			.transition()
+			.duration(500)
+			.attr('opacity', 1)
+			.attr('y', function(d) {
+				return yCenter[d] * height + 90;
+			})
+			.attr('x', width/2);
 	}
 
 	function resetPeriodLabels() {
@@ -402,14 +561,95 @@ window.createGraphic = function(data, maps) {
 			.attr('opacity', 0);
 	}
 
+	function resetMarks() {
+		svg.selectAll('.mark')
+			.transition()
+			.duration(200)
+			.attr('opacity', 0)
+			.attr('transform', "scale(1.5)");
+	}
+
 	function setupProse() {
 		var height = window.innerHeight * 0.5
 		graphicProseEl.selectAll('.trigger')
 			.style('height', height + 'px')
 	}
 
+	function drawMark(id, centerXPct, centerYPct, widthPx, heightPx) {
+		svg.append('rect')
+			.attr('id', id)
+			.attr('class', 'mark')
+			.attr('fill', 'rgba(1,1,1,0)')
+			.attr('stroke', 'red')
+			.attr('stroke-width', 3)
+			.attr('transform-origin', 
+					(centerXPct*100).toFixed(0) + "% " +
+				  (centerYPct*100).toFixed(0) + "%")
+			.attr('transform-box', 'fill-box')
+			.attr('x', (centerXPct*width)-(widthPx/2))
+			.attr('y', (centerYPct*height)-(heightPx/2))
+			.attr('width', widthPx)
+			.attr('height', heightPx)
+			.attr('rx', heightPx*0.1)
+			.attr('ry', heightPx*0.1);
+	}
+
+	function useSupportForces() {
+		simulation
+			.force('x', d3.forceX().x(function(d) {
+			  return xScale(d.data.si / d.data.total);
+			}))
+			.force('y', d3.forceY().y(function(d) {
+			  return (yCenter[d.data.period] * height) + 20;
+			}))
+		  .force('collision', d3.forceCollide().radius(function(d) {
+		    return d.radius + 2;
+		  }));
+	}
+
+	function usePerPartyForces() {
+		simulation
+		  .force('x', d3.forceX().x(function(d) {
+			  var location = maps.partyXPos[d.data.partido];
+			  return xPositionScale(location ? location : 0.9);
+			}))
+			.force('y', d3.forceY().y(function(d) {
+			  return yCenter[d.data.period] * height;
+			}))
+		  .force('collision', d3.forceCollide().radius(function(d) {
+		    return d.radius + 2;
+		  }));
+	}
+
+	function showMark(id) {
+		svg.select('.mark#' + id)
+			.transition()
+			.ease(d3.easeElastic)
+			.duration(600)
+			.attr('opacity', 1)
+			.attr('transform', "scale(1)");
+
+		svg.select('.mark#' + id)
+			.on("mouseover", function() {
+				graphicProseEl.select('span#' + id)
+					.attr("class", "active");
+				d3.select(this)
+					.transition()
+					.duration(200)
+					.attr('transform', "scale(1.1)");
+			})
+			.on("mouseout", function() {
+				graphicProseEl.select('span#' + id)
+					.attr("class", " ");
+				d3.select(this)
+					.transition()
+					.duration(200)
+					.attr('transform', "scale(1)");
+			});
+	}
+
 	function init() {
-		setupCharts()
+		setupCharts("Senado")
 		setupProse()
 		update(0)
 	}
