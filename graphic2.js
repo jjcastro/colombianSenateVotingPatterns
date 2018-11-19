@@ -33,6 +33,12 @@ window.createGraphic2 = function(partyData, personData, maps) {
 
 			clearEverything();
 
+		},
+		() => {
+			console.log("step2");
+			// chart2.selectAll(".linedata").remove();
+			clearEverything();
+
 			addLine("Centro Democrático", 1, true);
 			addLine("PDA - Polo Democrático Alternativo", 1, true);
 			addLine("Colombia Humana", 1, true);
@@ -44,10 +50,6 @@ window.createGraphic2 = function(partyData, personData, maps) {
 			addLine("Liberal Colombiano", 0, true);
 			addLine("Cambio Radical", 0, true);
 
-		},
-		() => {
-			console.log("step2");
-			// chart2.selectAll(".linedata").remove();
 			animateLines();
 		},
 		() => {
