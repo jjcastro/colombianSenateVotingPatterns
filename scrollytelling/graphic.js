@@ -367,7 +367,7 @@ window.createGraphic = function(data, maps) {
 
 		svg.append("line")
 			.attr("class", "axesRight")
-      .attr("x1",width/2 + 30)  
+      .attr("x1",width/2)  
       .attr("y1",lineHeight)  
       .attr("x2",width-35)  
       .attr("y2",lineHeight)  
@@ -377,7 +377,7 @@ window.createGraphic = function(data, maps) {
 
     svg.append("line")
     	.attr("class", "axesLeft")
-      .attr("x1",width/2 - 30)  
+      .attr("x1",width/2)  
       .attr("y1",lineHeight)  
       .attr("x2",30)  
       .attr("y2",lineHeight)  
