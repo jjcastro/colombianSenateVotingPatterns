@@ -178,6 +178,12 @@ main.text img {
   width: 100%;
 }
 
+.graphic2__vis svg {
+  -webkit-transform: translateY(-55%);
+  -moz-transform: translateY(-55%);
+  transform: translateY(-55%);
+}
+
 /*.item circle {
   stroke: #666;
   stroke-width: 1px;
