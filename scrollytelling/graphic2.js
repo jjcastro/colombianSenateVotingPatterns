@@ -26,9 +26,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
 	var yLine1 = null;
 	var yLine2 = null;
 	var board1 = null;
-	var board2 = null;
 
-  const anchoViz2 = 0.65;
+  const anchoViz2 = 0.85;
 	
 	// actions to take on each step of our scroll-driven story
 	var steps = [
@@ -276,26 +275,29 @@ window.createGraphic2 = function(partyData, personData, maps) {
       .attr("stroke-dasharray", function(d){ return this.getTotalLength() })
       .attr("stroke-dashoffset", function(d){ return this.getTotalLength() });
 
-    var selectedBoard = board1;//graphIndex == 0 ? board1 : board2;
-    var currentNum = selectedBoard.selectAll('.legendItem').size()
-    var offSet = 30 * currentNum;
+    var selectedBoard = board1;
 
     var base = selectedBoard.append('g')
-   		.attr('class', 'legendItem');
+   		.attr('class', 'legendItem ' + (extraClass != null ? extraClass:""));
 
     base.append('circle')
-      .attr("cx", 0)
-      .attr("cy", offSet)
+      .attr("cx", selectedBoard.node().getBBox().width)
+      .attr("cy", 0)
       .attr("r", 6)
       .style("fill", color);
 
-
     var prettyName = maps.partyNames[name] ? maps.partyNames[name] : name;
 
-  	base.append('text')
-  		.attr('dy', 5 + offSet)
-  		.attr('dx', 10)
-  		.text(isParty ? prettyName : name);
+  	var textE = base.append('text')
+  		.attr('dy', 5)
+  		.attr('dx', selectedBoard.node().getBBox().width)
+      .style('padding-right', '20px')
+  		.text((isParty ? prettyName : name) + "");
+
+    textE.append('tspan')
+      .attr('x', selectedBoard.node().getBBox().width)
+      .attr('opacity', '0')
+      .text("_");
 	}
 
 	function convertToLineArray(map) {
@@ -472,7 +474,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
 
     var xBoardPadding = 20;
     board1 = linesChart.append("g")
-    	.attr("transform", "translate(" + ((width*anchoViz2)+xBoardPadding) + " " + (linePadding/2) + ")");
+    	.attr("transform", "translate(0 " + (height-15) + ")");
 
     linesHolder = linesChart.append("g")
       .attr("class", ".linesHolder");
@@ -480,12 +482,12 @@ window.createGraphic2 = function(partyData, personData, maps) {
     // ============================================
     // CALLOUT MARKS
 
-    addMark(45,120,200,260,"down");
+    addMark(58,  120, 260, 260, "down");
 
-    addMark(480,240,550,200,"paz1");
-    addMark(480,410,550,310,"paz2");
+    addMark(624, 240, 715, 200, "paz1");
+    addMark(624, 410, 715, 315, "paz2");
 
-    addMark(480,345,550,360,"guerra");
+    addMark(624, 345, 715, 360, "guerra");
 
     // ============================================
     // RESETS
@@ -638,6 +640,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
         .transition()
             .duration(instant ? 0 : 400)
         .attr("stroke", "rgb(220,220,220)");
+
+    board1.selectAll("." + elemClass).remove();
   }
 
 	function init() {
