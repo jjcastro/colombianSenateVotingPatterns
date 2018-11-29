@@ -34,11 +34,13 @@ window.createGraphic = function(data, maps) {
 	// actions to take on each step of our scroll-driven story
 	var steps = [
 
+		// STEP 0
 		() => {
 			resetAxis();
 			resetPeriodLabels();
 			resetPartyLabels();
 			resetMarks();
+			resetFooter();
 			
 			simulation
 			  .force('x', d3.forceX().x(function(d) {
@@ -55,10 +57,13 @@ window.createGraphic = function(data, maps) {
 
 		},
 
+		// STEP 1
 		() => {
 			resetAxis();
 			resetPartyLabels();
 			resetMarks();
+
+			d3.select('.footer').style('opacity', '0.3');
 
 			svg.select('.periodLabel').selectAll('text')
 				.transition()
@@ -144,6 +149,8 @@ window.createGraphic = function(data, maps) {
 			resetPartyLabels();
 			resetMarks();
 
+			d3.select('.footer').style('opacity', '0.3');
+
 			showAxis();
 
 			showMark("CD2");
@@ -157,6 +164,7 @@ window.createGraphic = function(data, maps) {
 		() => {
 			resetPartyLabels();
 			resetMarks();
+			resetFooter();
 
 			showAxis();
 
@@ -235,7 +243,7 @@ window.createGraphic = function(data, maps) {
                    .scale(xScale)
                    .tickFormat(d3.format(".0%"));
     axes.append("g")
-    		.style("font", "14px Archivo")
+    		.style("font", (window.isMobile ? "24":"14") + "px Archivo")
     	 .attr("class", "axes")
     	 .attr("transform", "translate(0 " + yOffset + ")")
        .call(x_axis);
@@ -250,9 +258,11 @@ window.createGraphic = function(data, maps) {
 			.data(Object.keys(yCenter))
 			.enter()
 			.append("text")
+				.style("font", (window.isMobile ? "28":"16") + "px Archivo")
 				.attr("text-anchor", "middle")
 				.attr("x", function (d) { return yCenter[d] * width })
 				.attr("y", function (d) { return yCenter[d] * height + 50 })
+				.attr("dy", (window.isMobile ? 10 : 0))
 				.text(function (d) {
 					return d;
 				});
@@ -292,17 +302,17 @@ window.createGraphic = function(data, maps) {
 		var dHeight = 40;
 
 		actualPartyLabels.append("line")
-			.attr("style", "stroke:rgb(0,0,0,0.3);stroke-width:2")
+			.attr("style", "stroke:rgba(0,0,0,0.3);stroke-width:2")
 			.attr("x1", lineStart).attr("y1", dHeight)
 			.attr("x2", lineEnd).attr("y2", dHeight);
 
 		actualPartyLabels.append("line")
-			.attr("style", "stroke:rgb(0,0,0,0.3);stroke-width:2")
+			.attr("style", "stroke:rgba(0,0,0,0.3);stroke-width:2")
 			.attr("x1", lineStart).attr("y1", dHeight - 3)
 			.attr("x2", lineStart).attr("y2", dHeight + 3);
 
 		actualPartyLabels.append("line")
-			.attr("style", "stroke:rgb(0,0,0,0.3);stroke-width:2")
+			.attr("style", "stroke:rgba(0,0,0,0.3);stroke-width:2")
 			.attr("x1", lineEnd).attr("y1", dHeight - 3)
 			.attr("x2", lineEnd).attr("y2", dHeight + 3);
 
@@ -396,19 +406,21 @@ window.createGraphic = function(data, maps) {
 
     svg.append("text")
     	// .attr("text-anchor" "")
-    	.text("Menos apoyo a iniciativas del gobierno")
+    	.text((window.isMobile ? "Anti-gobierno" : "Menos apoyo a iniciativas del gobierno"))
+    	.style("font", (window.isMobile ? "28":"18") + "px Montserrat")
     	.attr("fill", markers.red.color)  
 			.attr("class", "axesLeft")
     	.attr("x", 50)
-    	.attr("y", 15);
+    	.attr("y", 20);
 
     svg.append("text")
     	.attr("text-anchor", "end")
-    	.text("Más apoyo a iniciativas del gobierno")
+    	.text((window.isMobile ? "Pro gobierno" : "Más apoyo a iniciativas del gobierno"))
+    	.style("font", (window.isMobile ? "28":"18") + "px Montserrat")
     	.attr("fill", markers.green.color) 
     	.attr("class", "axesRight")
     	.attr("x", width-60)
-    	.attr("y", 15);
+    	.attr("y", 20);
 
 		// ============================================
     // RESET add ons TO STARTING STATE
@@ -457,7 +469,9 @@ window.createGraphic = function(data, maps) {
 		    .style('fill', function(d) {
 		      return colorScale(d.data.partido);
 		    })
-		    .on("mouseover", function(d) {      
+		    .on("mouseover", function(d) {    
+		    	if (window.isMobile) return;
+
 	        tooltip.transition()        
 	          .duration(200)      
 	          .style("opacity", .9);   
@@ -561,6 +575,10 @@ window.createGraphic = function(data, maps) {
 			.attr('opacity', 0);
 	}
 
+	function resetFooter() {
+		d3.select('.footer').style('opacity', '0');
+	}
+
 	function resetMarks() {
 		svg.selectAll('.mark')
 			.transition()
@@ -570,9 +588,13 @@ window.createGraphic = function(data, maps) {
 	}
 
 	function setupProse() {
-		var height = window.innerHeight * 0.5
-		graphicProseEl.selectAll('.trigger')
-			.style('height', height + 'px')
+		console.log(window.isMobile);
+		if (!window.isMobile) {
+			// var height = window.innerHeight * 0.5
+			// graphicProseEl.selectAll('.trigger')
+			// 	.style('height', height + 'px');
+		}
+		
 	}
 
 	function drawMark(id, centerXPct, centerYPct, widthPx, heightPx) {
@@ -631,6 +653,8 @@ window.createGraphic = function(data, maps) {
 
 		svg.select('.mark#' + id)
 			.on("mouseover", function() {
+				if (window.isMobile) return;
+				
 				graphicProseEl.select('span#' + id)
 					.attr("class", "active");
 				d3.select(this)

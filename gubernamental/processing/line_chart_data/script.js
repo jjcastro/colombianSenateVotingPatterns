@@ -66,12 +66,19 @@ const meetsFilters = (vote) => {
   );
 }
 
+const meetsDates = (name, year) => {
+  return (
+    year >= 2009 && 
+    !(name == 'Centro Democrático' && year < 2014)
+  )
+}
+
 var step = (row) => {
   var registroVoto = row.data[0];
   const firstDay = findBox(registroVoto.fecha); // string
   
-  // var name = mappings[registroVoto.partido] ? mappings[registroVoto.partido] : registroVoto.partido;
-  var name = registroVoto.congresista;
+  var name = mappings[registroVoto.partido] ? mappings[registroVoto.partido] : registroVoto.partido;
+  // var name = registroVoto.congresista;
 
   if (name) {
     if (result[name] == null) {
@@ -96,6 +103,7 @@ var step = (row) => {
 };
 
 var cleanup = (result) => {
+  // calc percentages
   for (const name of Object.keys(result)) {
     var buckets = result[name];
     var total = 0;
@@ -115,7 +123,37 @@ var cleanup = (result) => {
     }
     // End Deviation cutoff
   }
-  return result;
+
+  // change start dates for end dates
+  var endDatesResult = {};
+
+  var names = Object.keys(result);
+  for (const name of names) {
+    var buckets = result[name];
+    var newBuckets = {};
+    var bucketNames = Object.keys(buckets);
+    for (const bucket of bucketNames) { 
+      var elems = bucket.split('-'); //bucket.substring(4, bucket.length+1)
+      var year = elems.shift();
+
+      // Filter out by date
+      if (meetsDates(name, +year)) {
+        var newDate = year;
+        if (elems.join('-') == '03-16') {
+          newDate += '-06-20';  
+        }
+        else if (elems.join('-') == '07-20') {
+          newDate += '-12-16';
+        } else {
+          console.log("ERROR for bucket: " + bucket)
+        }
+        newBuckets[newDate] = buckets[bucket];
+      }
+    }
+    endDatesResult[name] = newBuckets;
+  }
+
+  return endDatesResult;
 }
 
 var exportToJsonFile = (jsonData) => {
