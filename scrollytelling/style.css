@@ -467,3 +467,9 @@ div.tooltip h4.party {
   -o-animation: rotating 2s linear infinite;
   animation: rotating 2s linear infinite;
 }
+
+/* FOR USER TESTING: */
+
+/*.trigger p, .trigger2 p { background-color: black; }
+.trigger span, .trigger2 span { border: none !important; }
+*/
