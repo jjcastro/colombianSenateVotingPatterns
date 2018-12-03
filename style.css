@@ -33,7 +33,7 @@ main.intro div.intro-text {
 main.intro .logo-holder {
   position: absolute;
   right: 40px;
-  bottom: 40px;
+  bottom: 200px;
 }
 
 main.intro .logo-holder img {
@@ -43,6 +43,13 @@ main.intro .logo-holder img {
 
 main.intro .logo-holder img#logo-imagine {
   height: 100px;
+}
+
+main.intro #image-bkg {
+  position: absolute;
+  left: 0;
+  width: 100vw;
+  margin-top: -20px;
 }
 
 .left  { float: left;  }
@@ -56,7 +63,6 @@ main.text {
 
 main.text .left {
   max-width: 60%;
-  
 }
 
 main.text .right {
@@ -75,6 +81,44 @@ main.text .legend {
 
 main.text img {
   width: 100%;
+}
+
+.scroll-affordance {
+  position: fixed;
+  left: 50%;
+  bottom: 70px;
+  transform: translateX(-50%);
+
+  transition: 0.4s ease all;
+}
+
+.scroll-affordance#white-affordance {
+  color: #ffffff;
+}
+
+.scroll-affordance#white-affordance span {
+  font-size: 1em;
+}
+
+.scroll-affordance span {
+  display: block;
+  margin-bottom: 15px;
+  font-family: 'Archivo', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 0.9em;
+}
+
+.scroll-affordance img {
+  position: absolute;
+  width: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scroll-affordance#black-affordance {
+  opacity: 0;
 }
 
 .graphic,
@@ -429,7 +473,7 @@ div.tooltip h4.party {
   }
 }
 
-/* ROTATION ANIMATION
+/* ANIMATIONS
 ============================ */
 
 @-webkit-keyframes rotating /* Safari and Chrome */ {
@@ -466,6 +510,23 @@ div.tooltip h4.party {
   -ms-animation: rotating 2s linear infinite;
   -o-animation: rotating 2s linear infinite;
   animation: rotating 2s linear infinite;
+}
+
+.vert-move {
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+.vert-move {
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translate(-50%,0); }
+    100% { transform: translate(-50%, -30px); }
+}
+@keyframes mover {
+    0% { transform: translate(-50%,0); }
+    100% { transform: translate(-50%, -30px); }
 }
 
 /* FOR USER TESTING: */
