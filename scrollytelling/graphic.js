@@ -41,6 +41,8 @@ window.createGraphic = function(data, maps) {
 			resetPartyLabels();
 			resetMarks();
 			resetFooter();
+
+			d3.select('#white-affordance').style('opacity', '1');
 			
 			simulation
 			  .force('x', d3.forceX().x(function(d) {
@@ -64,6 +66,7 @@ window.createGraphic = function(data, maps) {
 			resetMarks();
 
 			d3.select('.footer').style('opacity', '0.3');
+			d3.select('#white-affordance').style('opacity', '0');
 
 			svg.select('.periodLabel').selectAll('text')
 				.transition()
@@ -158,6 +161,7 @@ window.createGraphic = function(data, maps) {
 
 			useSupportForces();
 
+			d3.select('#black-affordance').style('opacity', '0');
 			simulation.alpha(1).restart();
 		},
 
@@ -170,6 +174,7 @@ window.createGraphic = function(data, maps) {
 
 			useSupportForces();
 
+			d3.select('#black-affordance').style('opacity', '0.5');
 			simulation.alpha(1).restart();
 		},
 	]

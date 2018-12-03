@@ -46,6 +46,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetArrow('bottom');
       showArrow('top');
 
+      d3.select('#black-affordance').style('opacity', '0.5');
+
 		},
 		() => {
 			clearEverything();
@@ -53,6 +55,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       resetArrow('bottom');
       showArrow('top');
+
+      d3.select('#black-affordance').style('opacity', '0');
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
       animateLines();
