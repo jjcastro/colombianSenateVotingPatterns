@@ -8,8 +8,11 @@
   // If the device is mobile and in landscape,
   // show the cover prompting to change to portrait
   var warnedLandscape = false;
+
+  var is_iPad = navigator.userAgent.match(/iPad/i) != null;
+
   var checkLandscape = () => {
-    if (/Mobi/.test(navigator.userAgent)) {
+    if (/Mobi/.test(navigator.userAgent) && !is_iPad) {
       if (window.matchMedia("(orientation: landscape)").matches) {
         document.getElementById("landscapeCover").style.display = "block";
         warnedLandscape = true;

@@ -56,7 +56,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetArrow('bottom');
       showArrow('top');
 
-      d3.select('#black-affordance').style('opacity', '0');
+      resetAffordance();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
       animateLines();
@@ -66,6 +66,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       resetArrow('bottom');
       showArrow('top');
+      resetAffordance();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
       drawLines();
@@ -79,6 +80,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       resetArrow('bottom');
       showArrow('top');
+      resetAffordance();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
 
@@ -95,6 +97,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetMarks();
       showAxis();
       showArrow('top');
+      resetAffordance();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -122,6 +125,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetMarks();
       showAxis();
       showArrow('top');
+      resetAffordance();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -150,6 +154,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       showArrow('top');
       showArrow('bottom');
+      resetAffordance();
 
       // Grey out the top arrow
       d3.selectAll(".axes, .axesText")
@@ -177,6 +182,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetMarks();
       showAxis();
       showArrow('top');
+      resetAffordance();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -205,6 +211,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetMarks();
       showAxis();
       showArrow('top');
+      resetAffordance();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -234,6 +241,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       showArrow('top');
       showArrow('bottom');
+
+      resetAffordance();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "all", 0, true);
       addLine("Conservador Colombiano", "all", 0, true);
@@ -286,8 +295,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
 
     base.append('circle')
       .attr("cx", selectedBoard.node().getBBox().width)
-      .attr("cy", 0)
-      .attr("r", 6)
+      .attr("cy", (window.isMobile ? -5:0))
+      .attr("r", (window.isMobile ? 10:6))
       .style("fill", color);
 
     var prettyName = maps.partyNames[name] ? maps.partyNames[name] : name;
@@ -295,6 +304,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
   	var textE = base.append('text')
   		.attr('dy', 5)
   		.attr('dx', selectedBoard.node().getBBox().width)
+      .style("font", (window.isMobile ? "26":"18") + "px Montserrat")
       .style('padding-right', '20px')
   		.text((isParty ? prettyName : name) + "");
 
@@ -311,6 +321,10 @@ window.createGraphic2 = function(partyData, personData, maps) {
       return {startDate: +parse(startDate), pctSi: pctSi};
     });
 	}
+
+  function resetAffordance() {
+    d3.select('#black-affordance').style('opacity', '0');
+  }
 
 	function setupCharts() {
 
@@ -434,7 +448,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
 		
    	linesChart = svg2.append('g')
 			.classed('chart', true)
-			.attr('transform', 'translate(' + 90 + ',' + 0 + ')');
+			.attr('transform', 'translate(' + (window.isMobile ? 110:90) + ',' + 0 + ')');
 
    	xLine = d3.scaleTime()
       .domain([parse("2009-12-01"), parse("2017-03-16")])
@@ -447,7 +461,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
 
     linesChart.append("g")
       .call(d3.axisBottom(xLine))
-      .style("font", "12px Archivo")
+      // .style("font", "12px Archivo")
+      .style("font", (window.isMobile ? "24":"12") + "px Archivo")
       .attr("transform", "translate(0 " + (height-(linePadding)) + ")")
 
   	var axis1 = d3.axisLeft(yLine1)
@@ -473,12 +488,12 @@ window.createGraphic2 = function(partyData, personData, maps) {
     });
 
     linesChart.append("g")
-	    .style("font", "14px Archivo")
+	    .style("font", (window.isMobile ? "24":"14") + "px Archivo")
 	    .call(axis1);
 
     var xBoardPadding = 20;
     board1 = linesChart.append("g")
-    	.attr("transform", "translate(0 " + (height-15) + ")");
+    	.attr("transform", "translate(0 " + (window.isMobile ? 20:(height-15)) + ")");
 
     linesHolder = linesChart.append("g")
       .attr("class", ".linesHolder");
