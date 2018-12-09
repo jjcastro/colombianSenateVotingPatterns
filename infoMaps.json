@@ -7,7 +7,7 @@
     "Cambio Radical": "#E23CFC",
     "Alianza Verde": "#377D22",
     "Partido Verde": "#377D22",
-    "PDA - Polo Democrático Alternativo": "#FEF558",
+    "PDA - Polo Democrático Alternativo": "#F0D147",
     "MIRA": "#002BF5",
     "PIN - Partido de Integración Nacional": "#B6FC3C",
     "Opción Ciudadana": "#B6FC3C"
@@ -33,9 +33,13 @@
       "lines": ["Cambio","Radical"],
       "width": 70
     },
+    "PDA - Polo Democrático Alternativo": {
+      "lines": ["Polo", "Democrá."],
+      "width": 70
+    },
     "Otros": {
       "lines": ["", "Otros"],
-      "width": 260
+      "width": 170
     }
   },
   "relevantPeople": {
@@ -71,6 +75,6 @@
     "Alianza Verde": 0.75,
     "Opción Ciudadana": 0.82,
     "PIN - Partido de Integración Nacional": 0.82,
-    "Otros": 0.79
+    "Otros": 0.835
   }
 }
