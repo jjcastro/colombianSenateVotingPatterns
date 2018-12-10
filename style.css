@@ -552,6 +552,10 @@ div.tooltip h4.party {
   ul.credits li {
     margin-bottom: 20px;
   }
+
+  div.credits-holder {
+    padding-bottom: 50px;
+  }
 }
 
 /* ANIMATIONS
