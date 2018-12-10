@@ -47,7 +47,12 @@ h4.credits {
 
 ul.credits {
   padding-left: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+}
+
+ul.credits span.what {
+  width: 250px;
+  display: inline-block;
 }
 
 main.intro {
@@ -344,6 +349,7 @@ div.tooltip h4.party {
   background-color: rgba(0,0,0,0.9);
   top: 0;
   display: none;
+  z-index: 1000;
 }
 
 .errorCover > div {
@@ -536,6 +542,15 @@ div.tooltip h4.party {
     margin: 0 auto;
     display: block;
     padding-bottom: 20px;
+  }
+
+  ul.credits span.what {
+    width: initial;
+    display: block;
+  }
+
+  ul.credits li {
+    margin-bottom: 20px;
   }
 }
 
