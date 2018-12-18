@@ -219,6 +219,9 @@ window.createGraphic = function(data, maps) {
 		d3.select("div.tooltip")
 		  .append("h4")
 		  .attr("class", "party");
+		d3.select("div.tooltip")
+		  .append("h4")
+		  .attr("class", "period");
 
 		xScale = d3.scaleLinear().domain([0.28, 1.02]).range([0, width]);
 		xPositionScale = d3.scaleLinear().domain([0, 1]).range([0, width]);
@@ -488,6 +491,8 @@ window.createGraphic = function(data, maps) {
 	        tooltip.select("h4.party")
 	          .text(prettyName ? prettyName : d.data.partido )
 	          .style("background-color", colorScale(d.data.partido));
+	         tooltip.select("h4.period")
+	          .text(d.data.period);
 	        tooltip.select("p")
 	          .text(d.title == null ? "" : d.title);
 	        tooltip

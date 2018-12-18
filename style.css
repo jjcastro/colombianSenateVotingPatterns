@@ -59,6 +59,7 @@ main.intro {
   height: 100vh;
   padding: 100px;
   position: relative;
+  z-index: 400;
 }
 
 main.intro h1 {
@@ -74,6 +75,7 @@ main.intro .logo-holder {
   position: absolute;
   right: 40px;
   bottom: 200px;
+  z-index: 100;
 }
 
 main.intro .logo-holder img {
@@ -91,6 +93,7 @@ main.intro #image-bkg {
   left: 0;
   width: 100vw;
   margin-top: -20px;
+  z-index: -1;
 }
 
 .left  { float: left;  }
@@ -129,6 +132,8 @@ main.text img {
   left: 50%;
   bottom: 70px;
   transform: translateX(-50%);
+  text-align: center;
+  z-index: 500;
 
   transition: 0.4s ease all;
 }
@@ -139,6 +144,10 @@ main.text img {
 
 .scroll-affordance#white-affordance span {
   font-size: 1em;
+}
+
+.scroll-affordance#white-affordance span {
+  text-shadow: 0px 1px 10px rgba(0,0,0,0.5);
 }
 
 .scroll-affordance span {
@@ -156,6 +165,8 @@ main.text img {
   width: 70px;
   left: 50%;
   transform: translateX(-50%);
+  -webkit-filter: drop-shadow(0px 1px 5px rgba(0,0,0,0.5));
+  filter: drop-shadow(0px 1px 5px rgba(0,0,0,0.5));
 }
 
 .scroll-affordance#black-affordance {
@@ -292,14 +303,15 @@ main.text img {
 /* TOOLTIP */
 
 div.tooltip {
-  position: absolute;           
+  position: absolute;
   text-align: left;
-  padding: 5px 10px;             
-  font: 12px sans-serif;        
+  padding: 5px 10px;
+  font: 12px sans-serif;
   background: white;   
   border: 2px solid black;      
-  border-radius: 8px;           
-  pointer-events: none;         
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 999;
 }
 
 div.tooltip h3,
@@ -314,6 +326,17 @@ div.tooltip p {
 
 div.tooltip h4.party {
   background-color: #000;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 2px;
+
+  text-shadow: 0px 0px 3px rgba(0,0,0,0.75);
+}
+
+div.tooltip h4.period {
+  background-color: #BBB;
   color: #fff;
   padding: 3px 5px;
   border-radius: 3px;
@@ -386,6 +409,32 @@ div.tooltip h4.party {
   border: 2px solid white;
 }
 
+h1.separator {
+  text-align: center;
+  font-weight: 300;
+  margin-top: 60px;
+  margin-bottom: 50px;
+}
+
+div.credits-holder {
+  position: relative;
+}
+
+div.credits-holder img {
+  height: 80px !important;
+  margin-top: 50px;
+  width: auto;
+  display: inline-block;
+  /*position: absolute;
+  right: 0;
+  bottom: 0;*/
+}
+
+div.credits-holder img.uniandes-img {
+  padding: 10px 0;
+  margin-right: 40px;
+}
+
 /* SUPRA LAPTOP */
 @media screen and (min-width: 1280px) {
   .graphic__prose .trigger,
@@ -406,6 +455,7 @@ div.tooltip h4.party {
     width: 100%;
     height: 100vh; /* Fallback for browsers that do not support Custom Properties */
     height: calc(var(--vh, 1vh) * 100);
+    min-height: 660px;
   }
 
   main.intro div.intro-text {
@@ -556,6 +606,24 @@ div.tooltip h4.party {
   div.credits-holder {
     padding-bottom: 50px;
   }
+
+  div.credits-holder img {
+    height: 60px !important;
+  }
+
+  div.credits-holder img.uniandes-img {
+    margin-right: 10px;
+  }
+}
+
+.github-fork-ribbon {
+  opacity: 0;
+
+  transition: 0.3s ease all;
+}
+
+.github-fork-ribbon:before {
+    background-color: #000;
 }
 
 /* ANIMATIONS
