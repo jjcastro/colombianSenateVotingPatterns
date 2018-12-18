@@ -38,6 +38,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetArrows();
       resetMarks();
 
+      resetGithub();
+
 		},
 		() => {
 			clearEverything();
@@ -45,6 +47,8 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       resetArrow('bottom');
       showArrow('top');
+
+      resetGithub();
 
       d3.select('#black-affordance').style('opacity', '0.5');
 
@@ -57,6 +61,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showArrow('top');
 
       resetAffordance();
+      resetGithub();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
       animateLines();
@@ -67,6 +72,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetArrow('bottom');
       showArrow('top');
       resetAffordance();
+      resetGithub();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
       drawLines();
@@ -81,6 +87,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       resetArrow('bottom');
       showArrow('top');
       resetAffordance();
+      resetGithub();
 
       addLine("Partido de la U - Partido Social de Unidad Nacional", "main", 0, true);
 
@@ -98,6 +105,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       showArrow('top');
       resetAffordance();
+      resetGithub();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -126,6 +134,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       showArrow('top');
       resetAffordance();
+      resetGithub();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -155,6 +164,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showArrow('top');
       showArrow('bottom');
       resetAffordance();
+      resetGithub();
 
       // Grey out the top arrow
       d3.selectAll(".axes, .axesText")
@@ -183,6 +193,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       showArrow('top');
       resetAffordance();
+      resetGithub();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -212,6 +223,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
       showAxis();
       showArrow('top');
       resetAffordance();
+      resetGithub();
 
       // Grey out the top arrow
       d3.selectAll(".top")
@@ -244,6 +256,9 @@ window.createGraphic2 = function(partyData, personData, maps) {
 
       resetAffordance();
 
+      d3.select(".github-fork-ribbon")
+        .style("opacity", 1);
+
       addLine("Partido de la U - Partido Social de Unidad Nacional", "all", 0, true);
       addLine("Conservador Colombiano", "all", 0, true);
       addLine("Liberal Colombiano", "all", 0, true);
@@ -260,6 +275,11 @@ window.createGraphic2 = function(partyData, personData, maps) {
 	function update(step) {
 		steps[step].call()
 	}
+
+  function resetGithub() {
+    d3.select(".github-fork-ribbon")
+        .style("opacity", 0);
+  }
 	
 	// little helper for string concat if using es5
 	function translate(x, y) {
@@ -323,6 +343,7 @@ window.createGraphic2 = function(partyData, personData, maps) {
 	}
 
   function resetAffordance() {
+    resetGithub();
     d3.select('#black-affordance').style('opacity', '0');
   }
 
